@@ -1,0 +1,66 @@
+java-project-layout
+===================
+
+Java project layout from simple to comlicate and why that complicate?
+
+00-no-structure
+---------------
+Just single Java file. Simple but does not scale (scale = how well the project handles growth - more files, more developers, more features)
+```
+java Hello.java
+```
+* 1 Java file
+* compile/run the file
+
+
+01-some-files
+-------------
+A few Java files seperating concerns. Needs to compile
+```
+javac Hello.java
+java Hello
+```
+* multiple files
+* compile sources (by compiling the entrypoint all other files will be compiled too)
+* run the entrypoint (the class containing the main method)
+
+
+02-source-dest-folders
+----------------------
+Adding the idea of source and dest folders. Avoid possible collision with produced artifacts.
+Side:
+* javac -d <dir>    | where to put the compiled .class files
+* javac -cp <path>  | where to look for already-compiled classes your code depends on
+* java -cp <path>   | where to look for .class files when running
+```
+javac -d bin -cp bin src/Butler.java
+javac -d bin -cp bin src/Hello.java
+java -cp bin Hello
+```
+
+
+03-package-as-jar
+-----------------
+The java way to distribute programs.
+Side:
+* jar c         | create new JAR file
+* jar v         | Verbose - print out what's being added
+* jar f         | File - the next argument is the JAR filename to create
+* jar -C bin    | Change into the bin/ directory before adding files
+* jar .         | Add everything in that directory
+```
+javac -d bin -cp bin src/Butler.java
+javac -d bin -cp bin src/Hello.java
+jar cvf target/lonely.jar -C bin . 
+java -cp target/lonely.jar Hello
+```
+
+
+04-managing-dependencies
+------------------------
+
+
+
+References
+==========
+* https://github.com/sombriks/how-to-structure-java-projects
