@@ -58,6 +58,54 @@ java -cp target/lonely.jar Hello
 
 04-managing-dependencies
 ------------------------
+(too lazy to type it out, if you need the code, just go to https://github.com/sombriks/how-to-structure-java-projects)
+Using code from others, stand on the shoulders of giants.
+Example using Gson lib to parse json data.
+```
+javac -d bin -cp bin src/Item.java
+javac -d bin -cp bin src/Quotes.java
+javac -d bin -cp bin:lib/gson-2.10.1.jar src/Grievous.java
+javac -d bin -cp bin src/HelloThere.java
+jar cvfe target/star-wars-2.jar HelloThere -C bin . 
+java -cp lib/gson-2.10.1.jar:target/star-wars-2.jar HelloThere
+```
+Alternative way is using MANIFEST.MF
+```
+Manifest-Version: 1.0
+Main-Class: HelloThere
+Class-Path: gson-2.10.1.jar
+
+
+```
+so the command can be like this
+```
+javac -d bin -cp bin src/Item.java
+javac -d bin -cp bin src/Quotes.java
+javac -d bin -cp bin:lib/gson-2.10.1.jar src/Grievous.java
+javac -d bin -cp bin src/HelloThere.java
+jar cvfm target/star-wars-2.jar src/META-INF/MANIFEST.MF -C bin .
+cp lib/gson-2.10.1.jar target/gson-2.10.1.jar
+java -jar target/star-wars-2.jar
+```
+but this is too much effort for just one dependency, having hundreds of them will be problems
+
+
+05-ant-project
+--------------
+higher level project configuration for java projects.
+ant + build.xml...
+I just dont care, I will go to maven
+
+
+06-maven-project
+----------------
+okay, now it is a mess, and I understand why we should use IDE for simple :)
+
+
+
+Conclusion
+==========
+From single file to maven, we can agree that maven is a mess :), the only concept would be understand is we seperate folder into it function like src -> code base, bin -> binary file, target -> jar file, and some config file for maven.
 
 
 
